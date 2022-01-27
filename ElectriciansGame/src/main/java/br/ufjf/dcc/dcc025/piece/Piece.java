@@ -8,9 +8,9 @@ package br.ufjf.dcc.dcc025.piece;
  *
  * @author savio
  *  ---- TYPES OF PIECE ----
- * Piece A - 4 output and 1 solution
- * Piece B - 2 output (90°) and 4 solution
- * Piece C - 2 output (180°) and 2 solution
+ * Piece Cross - 4 output and 1 solution
+ * Piece Knee - 2 output (90°) and 4 solution
+ * Piece Link - 2 output (180°) and 2 solution
  * 
  * ---- TYPES OF DIRECTION ----
  * u - up (cima)
@@ -22,11 +22,11 @@ package br.ufjf.dcc.dcc025.piece;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Piece {
+public abstract class Piece {
     
     /* ---------- Attr --------------*/
     private List<Character> currentOutputs = new ArrayList<>();
-    private int position = 0;
+    int position = 0;
     
      /* --------- Constructor --------- 
     
@@ -35,9 +35,11 @@ public class Piece {
            this.currentOutputs = newCurrentOutputs;
     }
     
-    protected void setPosition(int newPosition){
+    public abstract void setPosition(int position);
+    
+    /*protected void setPosition(int newPosition){
         if(newPosition > 0 && newPosition < 5) this.position = newPosition;
-    }
+    }*/
 
     /* ----------- Getters ------------- */
     
