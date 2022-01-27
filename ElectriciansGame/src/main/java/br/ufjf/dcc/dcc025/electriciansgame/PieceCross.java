@@ -12,32 +12,41 @@ import br.ufjf.dcc.dcc025.piece.Piece;
  *
  * @author savio
  * 
+ * Piece Cross - 4 output and 1 solution
+ * 
+ * ---- TYPES OF DIRECTION ----
+ * u - up (cima)
+ * d - down (baixo)
+ * l - left (esquerda)
+ * r - right (right)
+ * 
  * POSITIONS
  * 1 - Only one position, like a plus sign : + 
+ * 
  */
 
-public class PieceA extends Piece {
+public class PieceCross extends Piece {
     /* ---------- Attr --------------*/
     
      /* --------- Constructor --------- */
-     public PieceA(int position){
-         initPieceA(position);
+     public PieceCross(int position){
+         initPieceCross(position);
     }
     
     /* ---------- Setters ------------- */
-
+     
+      @Override
+     public void setPosition(int position){
+         if(position != 1){
+            System.out.println("Can't init piece Cross because invalid position was given.");
+        }else this.position = position;
+     }
+     
     /* ----------- Getters ------------- */
     
     /* ----------- Others Methods ---------- */
      
-    public void initPieceA(int position){
-        if(position != 1){
-            System.out.println("Can't init piece A because invalid position was given.");
-            return;
-        }
-        
-        setPieceAPosition(position);
-        
+    public void initPieceCross(int position){
         // add all directions (left,right,down,up) to output
         List<Character> currentOutputs = new ArrayList<>();
         currentOutputs.add('u');
@@ -45,15 +54,6 @@ public class PieceA extends Piece {
         currentOutputs.add('r');
         currentOutputs.add('l');
         setCurrentOutputs(currentOutputs);
-    }
-    
-    public void setPieceAPosition(int position){
-        // Piece of type A only have 1 position
-        if(position != 1) { 
-            System.out.print("Invalid Position to Piece A.");
-            return;
-        }
-        
         setPosition(position);
     }
      

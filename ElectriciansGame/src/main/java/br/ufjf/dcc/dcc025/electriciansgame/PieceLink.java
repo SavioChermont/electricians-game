@@ -12,37 +12,43 @@ import br.ufjf.dcc.dcc025.piece.Piece;
  *
  * @author savio
  * 
- * POSITIONS (2)
+ * Piece Link - 2 output (180°) and 2 solution
+ * 
+ * ---- TYPES OF DIRECTION ----
+ * u - up (cima)
+ * d - down (baixo)
+ * l - left (esquerda)
+ * r - right (right)
+ * 
+ * ---- POSITIONS ----
  * 1 - Up and Down, like : -
  * 2 - Left and Right, like : I
  */
 
-public class PieceC extends Piece {
+public class PieceLink extends Piece {
     /* ---------- Attr --------------*/
     
      /* --------- Constructor --------- */
-     public PieceC(int position){
-         initPieceC(position);
+     public PieceLink(int position){
+         initPieceLink(position);
     }
     
     /* ---------- Setters ------------- */
+     
+     @Override
+     public void setPosition(int position){
+         if(position < 1 || position > 2){
+            System.out.println("Can't init piece Link because invalid position was given.");
+        }else this.position = position;
+     }
 
     /* ----------- Getters ------------- */
     
     /* ----------- Others Methods ---------- */
      
-    public void initPieceC(int position){
-        if(position < 0 && position > 2){
-            System.out.println("Can't init piece B because invalid position was given.");
-            return;
-        }
-        
-        setPieceCPosition(position);
-    }
-    
-    public void setPieceCPosition(int position){
+    public void initPieceLink(int position){
         List<Character> currentOutputs = new ArrayList<>();
-         // Piece of type B have 4 positions
+         // Piece Link have 2 positions
          switch (position) {
              case 1 -> {
                  currentOutputs.add('u');
@@ -53,7 +59,7 @@ public class PieceC extends Piece {
                  currentOutputs.add('r');
              }
              default -> {
-                 System.out.print("Invalid Position to Piece B.");
+                 System.out.print("Invalid Position to Piece Link.");
                  return;
              }
          }

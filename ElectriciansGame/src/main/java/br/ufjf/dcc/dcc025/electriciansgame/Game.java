@@ -17,7 +17,7 @@ public class Game {
     //Main
     public static void main(String args[]) {
         
-        PieceA peca = new PieceA(1);
-        peca.setPieceAPosition(1);
+        PieceCross peca = new PieceCross(1);
+        peca.setPosition(1);
     }
 }
