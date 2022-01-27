@@ -26,7 +26,7 @@ public abstract class Piece {
     
     /* ---------- Attr --------------*/
     private List<Character> currentOutputs = new ArrayList<>();
-    int position = 0;
+    public int position = 0;
     
      /* --------- Constructor --------- 
     
