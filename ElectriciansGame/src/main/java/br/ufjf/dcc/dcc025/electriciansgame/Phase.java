@@ -10,14 +10,14 @@ package br.ufjf.dcc.dcc025.electriciansgame;
  */
 import java.util.Random;
 public class Phase {
-     public static final int tableSize = 10;
      private int exitPosition;
      private int initPosition;
      // --------- Constructor ---------
+     
      public Phase() {
-       Random rand = new Random();
-       exitPosition = rand.nextInt(10);
-       initPosition = rand.nextInt(10);
+       //Random rand = new Random();
+       exitPosition = 4;//= rand.nextInt(Board.BOARD_LENGTH);
+       initPosition = 0;//rand.nextInt(Board.BOARD_LENGTH);
        createGame();
      }
      // --------- Getters ---------
@@ -29,14 +29,14 @@ public class Phase {
      }
      // --------- Setters ---------
      public boolean setExitPosition(int position){
-       if(position >= 0 && position < tableSize)
+       if(position >= 0 && position < Board.BOARD_LENGTH)
          exitPosition = position;
        else
          return false;
        return true;
      }
      public boolean setInitPosition(int position){
-       if(position >= 0 && position < tableSize)
+       if(position >= 0 && position < Board.BOARD_LENGTH)
          initPosition = position;
        else
          return false;
