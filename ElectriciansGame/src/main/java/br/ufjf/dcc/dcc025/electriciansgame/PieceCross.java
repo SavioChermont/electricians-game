@@ -6,7 +6,7 @@ package br.ufjf.dcc.dcc025.electriciansgame;
 
 import java.util.List;
 import java.util.ArrayList;
-import br.ufjf.dcc.dcc025.piece.Piece;
+import java.util.Random;
 
 /**
  *
@@ -30,31 +30,33 @@ public class PieceCross extends Piece {
     
      /* --------- Constructor --------- */
      public PieceCross(int position){
-         initPieceCross(position);
+         setPosition(position);
+         typeId = "cross";
+         
+         Random random = new Random();
+         id = random.nextInt(100);
     }
     
     /* ---------- Setters ------------- */
      
       @Override
-     public void setPosition(int position){
-         if(position != 1){
+     public void setPosition(int pos){
+         if(pos != 1){
             System.out.println("Can't init piece Cross because invalid position was given.");
-        }else this.position = position;
+            return;
+        }
+        
+         if(position != pos){
+             position = pos;
+             
+             // add all directions (left,right,down,up) to output
+            List<Character> currentOutputs = new ArrayList<>();
+            currentOutputs.add('u');
+            currentOutputs.add('d');
+            currentOutputs.add('r');
+            currentOutputs.add('l');
+            setCurrentOutputs(currentOutputs);
+         }
      }
-     
-    /* ----------- Getters ------------- */
-    
-    /* ----------- Others Methods ---------- */
-     
-    public void initPieceCross(int position){
-        // add all directions (left,right,down,up) to output
-        List<Character> currentOutputs = new ArrayList<>();
-        currentOutputs.add('u');
-        currentOutputs.add('d');
-        currentOutputs.add('r');
-        currentOutputs.add('l');
-        setCurrentOutputs(currentOutputs);
-        setPosition(position);
-    }
      
 }

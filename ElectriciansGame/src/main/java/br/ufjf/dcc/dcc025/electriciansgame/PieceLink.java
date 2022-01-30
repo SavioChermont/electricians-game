@@ -6,7 +6,7 @@ package br.ufjf.dcc.dcc025.electriciansgame;
 
 import java.util.List;
 import java.util.ArrayList;
-import br.ufjf.dcc.dcc025.piece.Piece;
+import java.util.Random;
 
 /**
  *
@@ -21,51 +21,56 @@ import br.ufjf.dcc.dcc025.piece.Piece;
  * r - right (right)
  * 
  * ---- POSITIONS ----
- * 1 - Up and Down, like : -
- * 2 - Left and Right, like : I
+ * 1 - Up and Down, like : I
+ * 2 - Left and Right, like : -
+ * 
  */
+
+
 
 public class PieceLink extends Piece {
     /* ---------- Attr --------------*/
     
      /* --------- Constructor --------- */
      public PieceLink(int position){
-         initPieceLink(position);
+         setPosition(position);
+         typeId = "link";
+         
+         Random random = new Random();
+         id = random.nextInt(100);
     }
     
     /* ---------- Setters ------------- */
      
      @Override
-     public void setPosition(int position){
-         if(position < 1 || position > 2){
+     public void setPosition(int pos){
+         if(pos < 1 || pos > 2){
             System.out.println("Can't init piece Link because invalid position was given.");
-        }else this.position = position;
+            return;
+        }
+         
+        if(pos != position){
+            position = pos;
+            List<Character> currentOutputs = new ArrayList<>();
+            // Piece Link have 2 positions
+            switch (pos) {
+                case 1 -> {
+                    currentOutputs.add('u');
+                    currentOutputs.add('d');
+                }
+                case 2 -> {
+                    currentOutputs.add('l');
+                    currentOutputs.add('r');
+                }
+                default -> {
+                    System.out.print("Invalid Position to Piece Link.");
+                    return;
+                }
+            }
+            setCurrentOutputs(currentOutputs);
+        }
+         
      }
-
-    /* ----------- Getters ------------- */
-    
-    /* ----------- Others Methods ---------- */
      
-    public void initPieceLink(int position){
-        List<Character> currentOutputs = new ArrayList<>();
-         // Piece Link have 2 positions
-         switch (position) {
-             case 1 -> {
-                 currentOutputs.add('u');
-                 currentOutputs.add('d');
-             }
-             case 2 -> {
-                 currentOutputs.add('l');
-                 currentOutputs.add('r');
-             }
-             default -> {
-                 System.out.print("Invalid Position to Piece Link.");
-                 return;
-             }
-         }
-        
-        setPosition(position);
-        setCurrentOutputs(currentOutputs);
-    }
      
 }

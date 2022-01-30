@@ -6,7 +6,7 @@ package br.ufjf.dcc.dcc025.electriciansgame;
 
 import java.util.List;
 import java.util.ArrayList;
-import br.ufjf.dcc.dcc025.piece.Piece;
+import java.util.Random;
 
 /**
  *
@@ -27,10 +27,10 @@ import br.ufjf.dcc.dcc025.piece.Piece;
  * r - right (right)
  * 
  * ---- POSITIONS (4) ----
- * 1 - Up and Left, like : L
- * 2 - Up and Right, like : ⅃
- * 3 - Down and Left, like : ℾ 
- * 4 - Down and Right, like ⅂
+ * 1 - Up and Left, like : ⅃ 
+ * 2 - Up and Right, like : L
+ * 3 - Down and Left, like : ⅂
+ * 4 - Down and Right, like ℾ
  */
 
 public class PieceKnee extends Piece {
@@ -38,51 +38,53 @@ public class PieceKnee extends Piece {
     
      /* --------- Constructor --------- */
      public PieceKnee(int position){
-         initPieceKnee(position);
+         setPosition(position);
+         typeId = "knee";
+         
+         Random random = new Random();
+         id = random.nextInt(100);
     }
     
     /* ---------- Setters ------------- */
      
      @Override
-     public void setPosition(int position){
-         if(position < 1 || position > 4){
+     public void setPosition(int pos){
+         if(pos < 1 || pos > 4){
             System.out.println("Can't init piece Knee because invalid position was given.");
-        }else this.position = position;
-     }
-
-    /* ----------- Getters ------------- */
-    
-    /* ----------- Others Methods ---------- */
-     
-    public void initPieceKnee(int position){
-        List<Character> currentOutputs = new ArrayList<>();
-        
-        // Piece of type B have 4 positions
-        switch (position) {
-             case 1 -> {
-                currentOutputs.add('u');
-                currentOutputs.add('l');
+            return;
+        }
+         
+         if(position != pos){
+            this.position = pos;
+            
+            List<Character> currentOutputs = new ArrayList<>();
+            // Piece of type B have 4 positions
+            switch (pos) {
+                 case 1 -> {
+                    currentOutputs.add('u');
+                    currentOutputs.add('l');
+                 }
+                 case 2 -> {
+                    currentOutputs.add('u');
+                    currentOutputs.add('r');
+                 }
+                 case 3 -> {
+                     currentOutputs.add('d');
+                     currentOutputs.add('l');
+                 }
+                 case 4 -> {
+                    currentOutputs.add('d');
+                    currentOutputs.add('r');
+                 }
+                 default -> {
+                     System.out.print("Invalid Position to Piece B.");
+                     return;
+                 }
              }
-             case 2 -> {
-                currentOutputs.add('u');
-                currentOutputs.add('r');
-             }
-             case 3 -> {
-                 currentOutputs.add('d');
-                 currentOutputs.add('l');
-             }
-             case 4 -> {
-                currentOutputs.add('d');
-                currentOutputs.add('r');
-             }
-             default -> {
-                 System.out.print("Invalid Position to Piece B.");
-                 return;
-             }
+            setCurrentOutputs(currentOutputs);
          }
         
-        setPosition(position);
-        setCurrentOutputs(currentOutputs);
-    }
+     }
+  
      
 }
