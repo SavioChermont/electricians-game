@@ -12,44 +12,50 @@ import java.util.Random;
  *
  * @author savio
  * 
- * Piece Link - 2 output (180°) and 2 solution
+ *         Piece Link - 2 output (180°) and 2 solution
  * 
- * ---- TYPES OF DIRECTION ----
- * u - up (cima)
- * d - down (baixo)
- * l - left (esquerda)
- * r - right (right)
+ *         ---- TYPES OF DIRECTION ----
+ *         u - up (cima)
+ *         d - down (baixo)
+ *         l - left (esquerda)
+ *         r - right (right)
  * 
- * ---- POSITIONS ----
- * 1 - Up and Down, like : I
- * 2 - Left and Right, like : -
+ *         ---- POSITIONS ----
+ *         1 - Up and Down, like : I
+ *         2 - Left and Right, like : -
  * 
  */
 
-
-
 public class PieceLink extends Piece {
-    /* ---------- Attr --------------*/
-    
-     /* --------- Constructor --------- */
-     public PieceLink(int position){
-         setPosition(position);
-         typeId = "link";
-         
-         Random random = new Random();
-         id = random.nextInt(100);
+    /* ---------- Attr -------------- */
+
+    /* --------- Constructor --------- */
+    public PieceLink() {
+        Random random = new Random();
+        setPosition(random.nextInt(2) + 1);
+        typeId = "link";
+
+        id = random.nextInt(100);
     }
-    
+
+    public PieceLink(int position) {
+        setPosition(position);
+        typeId = "link";
+
+        Random random = new Random();
+        id = random.nextInt(100);
+    }
+
     /* ---------- Setters ------------- */
-     
-     @Override
-     public void setPosition(int pos){
-         if(pos < 1 || pos > 2){
+
+    @Override
+    public void setPosition(int pos) {
+        if (pos < 1 || pos > 2) {
             System.out.println("Can't init piece Link because invalid position was given.");
             return;
         }
-         
-        if(pos != position){
+
+        if (pos != position) {
             position = pos;
             List<Character> currentOutputs = new ArrayList<>();
             // Piece Link have 2 positions
@@ -69,8 +75,7 @@ public class PieceLink extends Piece {
             }
             setCurrentOutputs(currentOutputs);
         }
-         
-     }
-     
-     
+
+    }
+
 }
