@@ -10,6 +10,9 @@ package br.ufjf.dcc.dcc025.electriciansgame;
  */
 
 import java.util.*;
+
+import javax.sound.sampled.SourceDataLine;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,7 +20,10 @@ import java.io.IOException;
 import java.io.BufferedReader;
 
 public class Game {
+    static User currentUser = null;
+    static List<User> users = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
+    static final Scanner scan = new Scanner(System.in);
     static List<Phase> phases = new ArrayList<>();
     HashMap<String, Piece> dictPiece = new HashMap<String, Piece>();
 
@@ -105,11 +111,12 @@ public class Game {
                     FileReader fr = new FileReader(file);
                     BufferedReader br = new BufferedReader(fr);
                     try {
+                        String creator = br.readLine();
                         String name = br.readLine();
                         String level = br.readLine();
                         int initPosition = Integer.parseInt(br.readLine());
                         int exitPosition = Integer.parseInt(br.readLine());
-                        Phase current = new Phase(name, level, initPosition, exitPosition);
+                        Phase current = new Phase(creator, name, level, initPosition, exitPosition);
                         while (br.ready()) {
                             String readed = br.readLine();
                             if (readed.equals("end"))
@@ -132,14 +139,145 @@ public class Game {
                 }
             }
         }
+    }
 
+    public static void createUser() {
+        boolean responseLogin = false;
+        int response;
+        String role;
+        String name;
+        String userName;
+        String password;
+        System.out.println("Selecione o tipo de usuario:");
+        System.out.println("[1] - Admin");
+        System.out.println("[2] - Jogador");
+        System.out.println("[3] - Sair");
+        response = scan.nextInt();
+        if (response == 1)
+            role = "Admin";
+        else if (response == 2)
+            role = "Player";
+        else
+            return;
+        System.out.println("Nome: ");
+        name = scan.next();
+        System.out.println("Username: ");
+        userName = scan.next();
+        System.out.println("Password: ");
+        password = scan.next();
+        for (User current : users) {
+            responseLogin = current.validateLogin(userName, password);
+            if (responseLogin) {
+                System.out.println("Esse usuario ja existe!");
+                break;
+            }
+        }
+        if (!responseLogin) {
+            users.add(User.getClassByRole(role, name, userName, password));
+        }
+    }
+
+    public static void doLogin() {
+        Boolean response;
+        String userName;
+        String password;
+        System.out.println("Username: ");
+        userName = scan.next();
+        System.out.println("Password: ");
+        password = scan.next();
+        for (User current : users) {
+            response = current.validateLogin(userName, password);
+            if (response) {
+                currentUser = current;
+                break;
+            }
+        }
+    }
+
+    public static void playPhase() {
+        System.out.println("play phase");
+    }
+
+    public static void createPhase() {
+        System.out.println("create phase");
+    }
+
+    public static void seeRecords() {
+        System.out.println("see records");
+    }
+
+    public static void mapOptions(int response, String role) {
+        switch (role) {
+            case "Admin":
+                switch (response) {
+                    case 1:
+                        createPhase();
+                        break;
+                    case 2:
+                        seeRecords();
+                        break;
+                }
+            case "Player":
+                switch (response) {
+                    case 1:
+                        playPhase();
+                        break;
+                    case 2:
+                        seeRecords();
+                        break;
+                }
+            case "Guest":
+                playPhase();
+        }
     }
 
     // Main
     public static void main(String args[]) {
+        int response;
+        boolean closeGame = false;
         getInitialPhases();
         for (Phase current : phases) {
+            System.out.print("Fase carregada = ");
             System.out.println(current.getName());
+        }
+        System.out.println();
+        while (!closeGame) {
+            while (currentUser == null) {
+                response = 0;
+                System.out.println("====== Login: ======");
+                System.out.println("[1] - Fazer login");
+                System.out.println("[2] - Criar usuario");
+                System.out.println("[3] - Jogar como convidado2");
+                System.out.println("[4] - Sair do jogo");
+                response = scan.nextInt();
+                switch (response) {
+                    case 1:
+                        doLogin();
+                        break;
+                    case 2:
+                        createUser();
+                        break;
+                    case 3:
+                        currentUser = new Guest();
+                        break;
+                    case 4:
+                        closeGame = true;
+                        break;
+                }
+                if (closeGame)
+                    break;
+            }
+            System.out.println("====== Menu: ======");
+            response = currentUser.getFunctions();
+            switch (response) {
+                case 9:
+                    closeGame = true;
+                    break;
+                case 8:
+                    currentUser = null;
+                    break;
+            }
+            mapOptions(response, currentUser.getRole());
         }
 
         // Board newBoard = new Board();

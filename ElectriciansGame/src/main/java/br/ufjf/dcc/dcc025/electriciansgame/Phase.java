@@ -11,6 +11,7 @@ package br.ufjf.dcc.dcc025.electriciansgame;
 import java.util.*;
 
 public class Phase {
+  private String creator;
   private int exitPosition;
   private int initPosition;
   private Board board;
@@ -18,7 +19,8 @@ public class Phase {
   private String name;
   // --------- Constructor ---------
 
-  public Phase(String name, String level, int exitPosition, int initPosition) {
+  public Phase(String creator, String name, String level, int exitPosition, int initPosition) {
+    this.creator = creator;
     this.name = name;
     this.level = level;
     this.initPosition = initPosition;
@@ -68,5 +70,9 @@ public class Phase {
 
   public Board getBoard() {
     return this.board;
+  }
+
+  public String getCreator() {
+    return this.creator;
   }
 }

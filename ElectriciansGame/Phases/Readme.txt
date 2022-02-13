@@ -1,5 +1,6 @@
 Formato das fases:
 
+Criador
 Nome
 Level
 Posição inicial
